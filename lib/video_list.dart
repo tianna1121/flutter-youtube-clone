@@ -1,20 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_youtube_clone/screens/video_detail.dart';
+
+import 'models/youtube_model.dart';
 
 class VideoList extends StatelessWidget {
-  final listData;
+  final List<YoutubeModel> listData;
+  final bool isMinList;
 
-  const VideoList({this.listData});
+  const VideoList({this.listData, this.isMinList = false});
 
   @override
   Widget build(BuildContext context) {
     final deviceOrientation = MediaQuery.of(context).orientation;
 
     return ListView.separated(
+      shrinkWrap: true,
       itemCount: listData.length,
       itemBuilder: (context, index) {
-        return deviceOrientation != Orientation.portrait
-            ? _buildLandscapeList(context, index)
-            : _buildPortraitList(context, index);
+        if (isMinList || deviceOrientation == Orientation.landscape) {
+          return InkWell(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => VideoDetail(
+                          detail: listData[index],
+                        )));
+              },
+              child: _buildLandscapeList(context, index));
+        } else {
+          return InkWell(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => VideoDetail(
+                          detail: listData[index],
+                        )));
+              },
+              child: _buildPortraitList(context, index));
+        }
       },
       separatorBuilder: (context, index) => Divider(
         height: 1.0,
@@ -56,13 +77,13 @@ class VideoList extends StatelessWidget {
 
   Widget _buildLandscapeList(BuildContext context, int index) {
     return Container(
-      padding: const EdgeInsets.all(12.0),
+      padding: const EdgeInsets.all(8.0),
       child: Row(
         children: <Widget>[
           Container(
-            //         width: MediaQuery.of(context).size.width / 2,
-            width: 336.0 / 1.5,
-            height: 188.0 / 1.5,
+            width:
+                isMinList ? MediaQuery.of(context).size.width / 2 : 336.0 / 1.5,
+            height: isMinList ? 100.0 : 188.0 / 1.5,
             decoration: BoxDecoration(
                 image: DecorationImage(
                     image: NetworkImage(listData[index].thumbNail),
@@ -74,22 +95,28 @@ class VideoList extends StatelessWidget {
               children: <Widget>[
                 ListTile(
                   contentPadding: const EdgeInsets.all(8.0),
+                  dense: isMinList ? true : false,
                   title: Padding(
                     padding: const EdgeInsets.only(bottom: 4.0),
                     child: Text(listData[index].title),
                   ),
-                  subtitle: Text(
-                      "${listData[index].channelTitle} ${listData[index].viewCount} ${listData[index].publishedTime}"),
+                  subtitle: !isMinList
+                      ? Text(
+                          "${listData[index].channelTitle} ${listData[index].viewCount} ${listData[index].publishedTime}")
+                      : Text(
+                          "${listData[index].channelTitle} ${listData[index].viewCount}"),
                   trailing: Container(
                       margin: const EdgeInsets.only(bottom: 30.0),
                       child: Icon(Icons.more_vert)),
                 ),
                 Container(
                   padding: const EdgeInsets.only(left: 8.0),
-                  child: CircleAvatar(
-                    backgroundImage:
-                        NetworkImage(listData[index].channelAvatar),
-                  ),
+                  child: !isMinList
+                      ? CircleAvatar(
+                          backgroundImage:
+                              NetworkImage(listData[index].channelAvatar),
+                        )
+                      : SizedBox(),
                 ),
               ],
             ),
