@@ -75,13 +75,13 @@ class _MessagesScreenState extends State<MessagesScreen>
           child: ListView(
             scrollDirection: Axis.horizontal,
             children: <Widget>[
-              _buildAddPerson("Jon Mk"),
-              _buildAddPerson("Jon HALLOOOWWW"),
-              _buildAddPerson("Jon Mk"),
-              _buildAddPerson("Jon Mk"),
-              _buildAddPerson("Jon Mk"),
-              _buildAddPerson("Jon Mk"),
-              _buildAddPerson("Jon Mk"),
+              _buildAddPerson("Paul Rudd"),
+              _buildAddPerson("Jon HALLOWW"),
+              _buildAddPerson("Sir Liu"),
+              _buildAddPerson("Jane Cloud"),
+              _buildAddPerson("Toyin Tomato"),
+              _buildAddPerson("Jude Law"),
+              _buildAddPerson("Eric Jonas"),
             ],
           ),
         ),
@@ -127,34 +127,35 @@ class _MessagesScreenState extends State<MessagesScreen>
 
   Widget _buildCallToAction() {
     return Container(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 32.0),
-              child: SvgPicture.asset(
-                "assets/images/add_friends_vector.svg",
-                width: 250.0,
-              ),
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: <Widget>[
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 32.0),
+            child: SvgPicture.asset(
+              "assets/images/add_friends_vector.svg",
+              width: 250.0,
             ),
-            Text(
-              "Get started by adding friends",
-              style: Theme.of(context).textTheme.title,
+          ),
+          Text(
+            "Get started by adding friends",
+            style: Theme.of(context).textTheme.title,
+          ),
+          Container(
+            padding: const EdgeInsets.only(top: 8.0, bottom: 16.0),
+            child: Text(
+              "Your chats would show up here",
+              style: Theme.of(context).textTheme.caption,
             ),
-            Container(
-              padding: const EdgeInsets.only(top: 8.0, bottom: 16.0),
-              child: Text(
-                "Your chats would show up here",
-                style: Theme.of(context).textTheme.caption,
-              ),
-            ),
-            FlatButton(
-              child: Text("ADD FRIENDS"),
-              onPressed: () {},
-              textColor: Colors.white,
-              color: Colors.blue[600],
-            )
-          ],
-        ));
+          ),
+          FlatButton(
+            child: Text("ADD FRIENDS"),
+            onPressed: () {},
+            textColor: Colors.white,
+            color: Colors.blue[600],
+          )
+        ],
+      ),
+    );
   }
 }
